@@ -1,62 +1,85 @@
-
 <!DOCTYPE html>
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
-    <title>Poème</title>
+    <title>Poème - Mon Site</title>
     <style>
-        body {
-            background-color: #f0f8ff;
-            font-family: 'Georgia', serif;
-            color: #333;
-        h1 {
-            font-size: 2.5em;
-            color: #2c3e50;
-            margin-bottom: 20px;
-        }
-        p {
-            font-size: 1.2em;
+        /* Styles communs copiés depuis index.html */
+        body { margin: 0; padding: 70px 0 0; font-family: 'Segoe UI', sans-serif; background-color: #222831; color: #EEEEEE; }
+        nav { position: fixed; top: 0; width: 100%; background-color: #31363F; padding: 15px; box-shadow: 0 2px 5px rgba(0,0,0,0.3); z-index: 1000; }
+        nav a { color: #76ABAE; text-decoration: none; margin: 0 20px; font-weight: bold; transition: color 0.3s; }
+        nav a:hover { color: #EEEEEE; }
+        .container { max-width: 800px; margin: 20px auto; padding: 20px; }
+        footer { background: #31363F; text-align: center; padding: 20px; margin-top: 50px; }
+
+        .poem-box {
+            background: #31363F;
+            padding: 30px;
+            border-radius: 10px;
             line-height: 1.6;
-            margin-top: 20px;
-            text-align: left;
-        }
-        a {
-            font-size: 0.8em;
-            line-height: 1.6;
-            margin-top: 30px;
             text-align: center;
+        }
+
+        .stanza {
+            margin: 25px 0;
+            font-style: italic;
+            color: #76ABAE;
         }
     </style>
 </head>
 <body>
-  <h1>La Coccinelle</h1>
-      <img src="https://lh4.googleusercontent.com/proxy/CUwUhjoYcbzE39FdJmaJq59lS2keEx6p8kXr0T4k8vy57cCnrGuEVL4GH2O87Ch4oFHer1_Im2X5vZJH3jgIfuQcCawX-H9NOkPjY4Gt"
-            <p>
-                <br>
-                Elle me dit : Quelque chose<br>
-                Me tourmente. Et j'aperçus<br>
-                Son cou de neige, et, dessus,<br>
-                Un petit insecte rose.<br>
-                <br>
-                J'aurais dû - mais, sage ou fou,<br>
-                A seize ans on est farouche,<br>
-                Voir le baiser sur sa bouche<br>
-                Plus que l'insecte à son cou.<br>
-                <br>
-                On eût dit un coquillage ;<br>
-                Dos rose et taché de noir.<br>
-                Les fauvettes pour nous voir<br>
-                Se penchaient dans le feuillage.<br>
-                <br>
-                Sa bouche franche était là :<br>
-                Je me courbai sur la belle,<br>
-                Et je pris la coccinelle ;<br>
-                Mais le baiser s'envola.<br>
-                <br>
-                - Fils, apprends comme on me nomme,<br>
-                Dit l'insecte du ciel bleu,<br>
-                Les bêtes sont au bon Dieu,<br>
-                Mais la bêtise est à l'homme.<br>
-            </p>
-      <a href="https://www.bonjourpoesie.fr/lesgrandsclassiques/poemes/victor_hugo/la_coccinelle#google_vignette">Source</a>
+    <!-- Barre de navigation -->
+    <nav>
+        <a href="index.html">Accueil</a>
+        <a href="poeme.html">Poème</a>
+        <a href="voyage.html">Voyage au Népal</a>
+        <a href="biographie.html">Biographie</a>
+    </nav>
+
+    <!-- Contenu principal -->
+    <div class="container">
+        <div class="poem-box">
+            <h1 style="color: #76ABAE; margin-top: 0;">The Road Not Taken</h1>
+            <!-- Image locale à ajouter ici -->
+            <!-- <img src="images/foret.jpg" alt="Forêt avec un chemin" style="width: 100%; border-radius: 10px; margin-bottom: 20px;"> -->
+            <div class="stanza">
+                <p>Two roads diverged in a yellow wood,<br>
+                And sorry I could not travel both<br>
+                And be one traveler, long I stood<br>
+                And looked down one as far as I could<br>
+                To where it bent in the undergrowth;</p>
+            </div>
+
+            <div class="stanza">
+                <p>Then took the other, as just as fair,<br>
+                And having perhaps the better claim,<br>
+                Because it was grassy and wanted wear;<br>
+                Though as for that the passing there<br>
+                Had worn them really about the same,</p>
+            </div>
+
+            <div class="stanza">
+                <p>And both that morning equally lay<br>
+                In leaves no step had trodden black.<br>
+                Oh, I kept the first for another day!<br>
+                Yet knowing how way leads on to way,<br>
+                I doubted if I should ever come back.</p>
+            </div>
+
+            <div class="stanza">
+                <p>I shall be telling this with a sigh<br>
+                Somewhere ages and ages hence:<br>
+                Two roads diverged in a wood, and I—<br>
+                I took the one less traveled by,<br>
+                And that has made all the difference.</p>
+            </div>
+            <p>Source : <a href="https://www.poetryfoundation.org/poems/44272/the-road-not-taken" target="_blank" style="color: #76ABAE;">Poetry Foundation</a></p>
+        </div>
+    </div>
+
+    <!-- Footer avec lien de retour à l'accueil -->
+    <footer>
+        <a href="index.html" style="color: #76ABAE; text-decoration: none;">Retour à l'accueil</a>
+    </footer>
 </body>
 </html>
