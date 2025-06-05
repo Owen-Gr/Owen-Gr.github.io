@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Graas-Kamp Inc.</title>
+    
+    <style>
+    /* Transitions du site au total trouvés à https://www.w3schools.com/css/css3_transitions.asp*/
+        /* Style de base pour le corps de la page */
+        body {
+             /* Couleur de fond sombre */
+            background-color: #12363F;
+        }
+        
+        /* Conteneur principal - limite la largeur et centre le contenu */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto; 
+            padding: 20px; 
+        }
+        
+        /* Barre de navigation */
+        nav {
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+        
+        /* Style du titre dans la barre de navigation */
+        nav h1 {
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        /* Bouton du panier - fixé en haut à droite */
+        .cart {
+            position: fixed;
+            right: 3px;
+            top: 3px;
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 5px;
+            /* Animation au survol */
+            transition: transform 0.2s; 
+        }
+        
+        /* Animation du panier au survol */
+        .cart:hover {
+            transform: scale(1.1);
+        }
+        
+        /* Logo - fixé en haut à gauche */
+        .logo {
+            position: absolute;
+            left: 3px;
+            top: 3px;
+        }
+        
+        /* Grille pour afficher les produits */
+        .page-grid {
+            display: grid;
+            /* 3 colonnes */
+            grid-template-columns: auto auto auto;
+            gap: 25px;
+            padding: 20px;
+        }
+        
+        /* Style des boîtes de produits */
+        .page-box {
+            background: #31363F;
+            padding: 25px;
+            border-radius: 10px;
+            transition: transform 0.3s;
+            text-align: center;
+            height: 400px;
+            color: #76ABAE;
+            margin-top: 0;
+        }
+        
+        /* Animation des boîtes au survol */
+        .page-box:hover {
+            transform: translateY(-20px);
+        }
+        
+        /* Style des images dans les boîtes */
+        .page-box img {
+            height: 40%;
+            width: auto;
+        }
+        
+        /* Style des champs de quantité */
+        input[type="number"] {
+            width: 60px;
+            padding: 5px;
+            border: 2px solid #76ABAE;
+            border-radius: 4px;
+            background-color: #31363F;
+            color: #76ABAE;
+            margin: 10px 0;
+        }
+        
+        /* Style des boutons "Ajouter au Panier", trouvé à https://www.w3schools.com/css/css_form.asp */
+        input[type="button"] {
+            padding: 8px 16px;
+            background-color: #76ABAE;
+            color: #12363F;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-top: 10px;
+            font-weight: bold;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        /* Animation des boutons au survol */
+        input[type="button"]:hover {
+            background-color: #558588;
+            transform: scale(1.05);
+        }
+        
+        /* Style des labels */
+        label {
+            font-weight: bold;
+            color: #76ABAE;
+        }
+        
+        /* Style du bouton "Passer à la Caisse" */
+        .caisseBtn {
+            display: block;
+            margin: 20px auto;
+            padding: 12px 24px;
+            background-color: #76ABAE;
+            color: #12363F;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        /* Animation du bouton caisse au survol */
+        .caisseBtn:hover {
+            background-color: #558588;
+            transform: scale(1.05);
+        }
+        
+        /* Style de base du modal (panier) */
+        .modal {
+            position: fixed;
+            top: 0%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.1);
+            text-align: center;
+            visibility: hidden;
+            transition: transform 0.4s, top 0.4s;
+            padding: 0, 30px, 30px;
+        }
+        
+        /* Style du bouton de fermeture du modal */
+        .close-btn {
+            position: absolute;
+            right: 10px;
+            top: 10px;
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            color: #76ABAE;
+        }
+        
+        /* Animation du bouton de fermeture au survol */
+        .close-btn:hover {
+            color: #558588;
+        }
+        
+        /* Style du contenu du modal */
+        .contenuModal {
+            position: relative;
+            background-color: #31363F;
+            padding: 30px;
+            width: 300px;
+            border-radius: 8px;
+            border: 2px solid #76ABAE;
+            color: #76ABAE;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        /* Style du titre dans le modal */
+        .contenuModal h1 {
+            margin-top: 0;
+            color: #76ABAE;
+            font-size: 24px;
+        }
+        
+        /* Style des paragraphes dans le modal */
+        .contenuModal p {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+        
+        /* Style du bouton de confirmation dans le modal */
+        .contenuModal button[type="submit"] {
+            padding: 10px 20px;
+            background-color: #76ABAE;
+            color: #12363F;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-top: 15px;
+            transition: background-color 0.3s, transform 0.2s;
+        }
+        
+        /* Animation du bouton de confirmation au survol */
+        .contenuModal button[type="submit"]:hover {
+            background-color: #558588;
+            transform: scale(1.05);
+        }
+        
+        /* Classe pour afficher le modal */
+        .ouvreModal {
+            visibility: visible;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(1);
+        }
+        
+        /* Style du popup d'erreur */
+        .erreur-popup {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            /* Rouge pour l'erreur */
+            background-color: #ff4444; 
+            color: white;
+            padding: 15px 30px;
+            border-radius: 5px;
+            /* Assure que le popup est au-dessus des autres éléments */
+            z-index: 1000;
+            display: none;
+        }
+        /*Style du popup de remerciement */
+        .merci-popup {
+            position: fixed;
+            top: 30%;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #558588; 
+            color: #12363F;
+            font-size:50px;
+            padding: 15px 30px;
+            border-radius: 5px;
+            z-index: 1000;
+            display: none;
+        }
+        /*Style du section à propos*/
+        .a-propos {
+            text-align:center;
+            color:#76ABAE;
+            width:600px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Barre avec logo et Panier -->
+    <nav>
+        <h1 style="text-align: center; color: #76ABAE;">
+        <img class="logo" src="https://i.imgur.com/1ZMFhDi.png" width=60px >
+            Graas-Kamp Inc.
+        <button class="cart" type="submit" onclick="ouvreModal()"> 
+            <img src="https://cdn-icons-png.flaticon.com/128/6916/6916455.png" width=50px>
+        </button>
+        </h1>
+        <hr style="border:1px solid #76ABAE;">
+    </nav>
+    <!-- div «à propos» -->
+    <center>
+        <div class="a-propos">
+            <h2>À propos de nous</h2>
+            <p>
+            Chez Graas-Kamp, nous sommes passionnés par l’aventure en plein air et déterminés à
+            vous offrir l’équipement de camping le plus fiable, pratique et durable. Que vous 
+            soyez campeur débutant ou explorateur expériencé, notre site en ligne propose une 
+            sélection de produits essentiels pour rendre chaque sortie en nature confortable
+            et mémorable. Vivez l’expérience du camping autrement, avec Graas-Kamp.
+            </p>
+        </div>
+    </center>
+    <!-- Contenu principal -->
+    <div class="container">
+        
+        <form>
+            <div class="page-grid">
+                <!-- Item 1 : Tente -->
+                <div class="page-box">
+                    <h2>Tente</h2>
+                    <img src="https://m.media-amazon.com/images/I/81DaQhY+yRL._AC_UF894,1000_QL80_.jpg" >
+                    <h3>200 $</h3>
+                    <label> Qt : </label>
+                    <input id="QtTente" type="number" min="0" max="10" value="0"><br>
+                    <input type="button" value="Ajouter au Panier" onclick='ajouteItem("Tente")'>
+                </div>
+                <!-- Item 2 : Manteau de Pluie -->
+                <div class="page-box">
+                    <h2>Manteau de Pluie</h2>
+                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcR-Dsvx49P4FJX3p6NbmYXPiPVFG-2dMxdzMg&s">
+                    <h3>50 $</h3>
+                    <label> Qt : </label>
+                    <input id="QtManteau" type="number" min="0" max="10" value="0"><br>
+                    <input type="button" value="Ajouter au Panier" onclick='ajouteItem("Manteau")'>
+                </div>
+                <!-- Item 3 : Cuisine de Camping -->
+                <div class="page-box">
+                    <h2>Cuisine de Camping</h2>
+                    <img src="https://www.obelink.fr/media/catalog/product/cache/22428780cbde0636b93e1b28439806d6/c/a/campingaz_camping_kitchen_2_multi_cook-ecommerce.jpeg">
+                    <h3>100 $</h3>
+                    <label> Qt : </label>
+                    <input id="QtCuisine" type="number" min="0" max="10" value="0"><br>
+                    <input type="button" value="Ajouter au Panier" onclick='ajouteItem("Cuisine")'>
+                </div>
+            </div>
+        </form>
+        <!-- Modal avec le panier et le prix total -->
+        <div class="modal" id="modal">
+            <div class="contenuModal">
+                <!-- Bouton pour s'écapper du panier -->
+                <button class="close-btn" onclick="fermeModal()">&times;</button>
+                <h1>Panier:</h1>
+                <p id="panierTente"></p>
+                <p id="panierManteau"></p>
+                <p id="panierCuisine"></p>
+                <p id="Rabais"></p>
+                <p id="SousTotal"></p>
+                <p id="Taxes"></p>
+                <p id="Total"></p>
+                <!-- Bouton pour confirmer le transaction -->
+                <button type="submit" onclick="fermeModal('confirme')">Confirmer l'achat</button>
+            </div>
+        </div>
+        <!-- div si l'utilisateur entre un quantité qui n'est pas entre 0 et 10 -->
+        <div id="erreurPopup" class="erreur-popup">
+            Quantité invalide! La quantité doit être un nombre entier entre 0 et 10.
+        </div>
+        <div id="merciPopup" class="merci-popup">
+            Merci pour votre achat!
+        </div>
+        <!-- Bouton pour passer à la caisse -->
+        <button class="caisseBtn" onclick="ouvreModal()">Passer à la Caisse</button>
+    </div>
+    <script>
+        // Variables pour stocker les quantités
+        var NbTente=0
+        var NbManteau=0
+        var NbCuisine=0
+
+        // Fonction pour ajouter des articles au panier
+        function ajouteItem(item) {
+            // Récupère les quantités saisies
+            var Tente = document.getElementById("QtTente")
+            var Manteau = document.getElementById("QtManteau")
+            var Cuisine = document.getElementById("QtCuisine")
+            var TenteAjoute = parseFloat(Tente.value)
+            var ManteauAjoute = parseFloat(Manteau.value)
+            var CuisineAjoute = parseFloat(Cuisine.value)
+            var itemCheck = TenteAjoute + ManteauAjoute + CuisineAjoute
+        
+            // Vérifie si les quantités sont valides
+            if ((isNaN(itemCheck) == false) && (itemCheck>=0) && (itemCheck<=10) && (parseInt(itemCheck) == itemCheck)) {
+                // Ajoute les quantités aux totaux
+                if (item == "Tente"){
+                    NbTente += TenteAjoute
+                    Tente.value = "0"
+                } else if (item == "Manteau"){
+                    NbManteau += ManteauAjoute
+                    Manteau.value = "0"
+                } else if (item == "Cuisine"){
+                    NbCuisine += CuisineAjoute
+                    Cuisine.value = "0"
+                }
+            } else {
+                //Change les valeurs à 0
+                Cuisine.value = "0"
+                Manteau.value = "0"
+                Tente.value = "0"
+                // Affiche le popup d'erreur
+                var erreurPopup = document.getElementById("erreurPopup");
+                erreurPopup.style.display = "block";
+                // Cache le popup après 3 secondes, trouvé setTimeout à https://www.w3schools.com/jsref/met_win_settimeout.asp
+                setTimeout(function() {
+                    erreurPopup.style.display = "none";
+                }, 3000);
+            }
+        }
+
+        // Fonction pour ouvrir et mettre à jour le panier
+        function ouvreModal() {
+            var modal = document.getElementById("modal")
+            modal.classList.add("ouvreModal");
+            
+            // Calcul du prix total
+            var prixTotal = (200*NbTente) + (50*NbManteau) + (100*NbCuisine)
+            
+            // Mise à jour de l'affichage du panier
+            document.getElementById("panierTente").innerHTML = NbTente + "x Tente : " + (NbTente * 200).toFixed(2) + "$"
+            document.getElementById("panierManteau").innerHTML = NbManteau + "x Manteau de Pluie : " + (NbManteau * 50).toFixed(2) + "$"
+            document.getElementById("panierCuisine").innerHTML = NbCuisine + "x Cuisine de Camping : " + (NbCuisine * 100).toFixed(2) + "$"
+            
+            // Application du rabais si applicable
+            if (prixTotal >= 500) {
+                document.getElementById("Rabais").innerHTML = "Rabais : -" + (prixTotal/10).toFixed(2) + "$"
+                prixTotal = 0.9*prixTotal
+            }
+            
+            // Affichage des totaux
+            document.getElementById("SousTotal").innerHTML = "Sous-total : " + prixTotal.toFixed(2) + "$"
+            document.getElementById("Taxes").innerHTML= "Taxes : " + (prixTotal*0.13).toFixed(2) + "$"
+            document.getElementById("Total").innerHTML= "Total : " + (prixTotal*1.13).toFixed(2) + "$"
+        }  
+        
+        // Fonction pour fermer le panier
+        function fermeModal(methode) {
+            //Si le panier est fermé par le transaction qui confirme, vide le nombre d'items
+            if (methode == 'confirme') {
+                NbTente = 0
+                NbManteau = 0
+                NbCuisine = 0
+                document.getElementById("Rabais").innerHTML = ""
+                 // Affiche le popup de remerciement
+                var merciPopup = document.getElementById("merciPopup");
+                merciPopup.style.display = "block";
+                    
+                // Cache le popup après 3 secondes, trouvé setTimeout à https://www.w3schools.com/jsref/met_win_settimeout.asp
+                setTimeout(function() {
+                    merciPopup.style.display = "none";
+                }, 3000);
+            }
+            //ferme le modal de panier
+            var modal = document.getElementById("modal")
+            modal.classList.remove("ouvreModal");
+        }
+    </script>
+</body>
+</html>
